@@ -2,6 +2,7 @@ import wpparser
 from pathlib import Path
 from os.path import isfile, join
 from os import listdir
+import subprocess
 import sys
 
 def getInputFile():
@@ -21,10 +22,20 @@ def parseInputFile(input_file):
     blog_post_name = blog_data['posts'][0]['post_name']
     blog_content = blog_data['posts'][0]['content']
 
+    blog_content_file = Path("data/") / "blog_content.xml"
     content_str = blog_content.lstrip('\'')
-    f = open("blog_content.xml", "w")
+    f = open(blog_content_file, "w")
     f.write(content_str)
     f.close()
+
+    formatBlogContentTags(blog_content_file)
+
+
+def formatBlogContentTags(input_file):
+    wp_blog_tags = ("wp:heading", "wp:paragraph", "wp:spacer", "wp:list", "wp:separator", "wp:code", "wp:image")
+    search_string = "paragraph"
+    subprocess.check_call("./scripts/formatBlogContentTags.sh %s %s" % (str(input_file), str(search_string)), shell=True)
+
 
 
 getInputFile()
