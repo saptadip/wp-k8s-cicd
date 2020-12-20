@@ -1,18 +1,30 @@
-from pathlib import Path
 import wpparser
-import os
+from pathlib import Path
+from os.path import isfile, join
+from os import listdir
+import sys
 
-data_folder = Path("data/latest/")
-data_file = data_folder / "blog2-localmac-technotales.WordPress.2020-12-19.xml"
+def getInputFile():
+    data_folder = Path("data/latest/")
+    xml_file_list = [f for f in listdir(data_folder) if isfile(join(data_folder, f))]
 
-#data = wpparser.parse("./technotales.WordPress.2020-12-19.xml")
-blog_data = wpparser.parse(data_file)
-title_data = blog_data['posts'][0]['title']
-post_name = blog_data['posts'][0]['post_name']
-content_data = blog_data['posts'][0]['content']
+    if len(xml_file_list) != 1:
+      sys.exit("ONE and only ONE xml File is expected in the data/landing direcotry. Exitting...")
+    else:
+      data_file = data_folder / str(xml_file_list[0])
+      parseInputFile(data_file)
 
-content_str = content_data.lstrip('\'')
-f = open("blog_content.xml", "w")
-f.write(content_str)
-f.close()
 
+def parseInputFile(input_file):
+    blog_data = wpparser.parse(input_file)
+    blog_title = blog_data['posts'][0]['title']
+    blog_post_name = blog_data['posts'][0]['post_name']
+    blog_content = blog_data['posts'][0]['content']
+
+    content_str = blog_content.lstrip('\'')
+    f = open("blog_content.xml", "w")
+    f.write(content_str)
+    f.close()
+
+
+getInputFile()
