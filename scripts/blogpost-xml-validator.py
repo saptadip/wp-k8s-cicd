@@ -1,6 +1,6 @@
 from pathlib import Path
 import wpparser
-import os	
+import os
 
 data_folder = Path("data/latest/")
 data_file = data_folder / "blog2-localmac-technotales.WordPress.2020-12-19.xml"
@@ -15,3 +15,4 @@ content_str = content_data.lstrip('\'')
 f = open("blog_content.xml", "w")
 f.write(content_str)
 f.close()
+
