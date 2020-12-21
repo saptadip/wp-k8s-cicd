@@ -15,6 +15,8 @@ updateXml () {
     done
 }
 
+
+
 case "$tagNm" in
 
   paragraph)
@@ -25,6 +27,31 @@ case "$tagNm" in
   heading)
     echo "Inside Heading"
     updateXml "wp:heading"
+    ;;
+
+  spacer)
+    echo "Inside Spacer"
+    updateXml "wp:spacer"
+    ;;
+
+  list)
+    echo "Inside List"
+    updateXml "wp:list"
+    ;;
+
+  separator)
+    echo "Inside Separator"
+    updateXml "wp:separator"
+    ;;
+
+  code)
+    echo "Inside Code"
+    updateXml "wp:code"
+    ;;
+
+  image)
+    echo "Inside Image"
+    updateXml "wp:image"
     ;;
 
 esac

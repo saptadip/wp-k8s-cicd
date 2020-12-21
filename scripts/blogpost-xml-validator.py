@@ -33,9 +33,10 @@ def parseInputFile(input_file):
 
 def formatBlogContentTags(input_file):
     wp_blog_tags = ("wp:heading", "wp:paragraph", "wp:spacer", "wp:list", "wp:separator", "wp:code", "wp:image")
-    search_string = "paragraph"
-    subprocess.check_call("./scripts/formatBlogContentTags.sh %s %s" % (str(input_file), str(search_string)), shell=True)
-
+    for x in wp_blog_tags:
+      a,b = x.split(':')
+      search_string = b
+      subprocess.check_call("./scripts/formatBlogContentTags.sh %s %s" % (str(input_file), str(search_string)), shell=True)
 
 
 getInputFile()
